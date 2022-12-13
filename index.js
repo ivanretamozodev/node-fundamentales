@@ -1,5 +1,6 @@
 const fs = require('fs');
 const http = require('http');
+const url = require('url');
 
 ////////////////////////////////////
 /// FILES
@@ -40,3 +41,21 @@ console.log('will read file');
 
 ////////////////////////////////////
 /// SERVER
+
+const server = http.createServer((req, res) => {
+    const pathName = req.url;
+    if (pathName === '/' || pathName === '/overview') {
+        res.end('this is the OVERVIEW');
+    } else if (pathName === '/product') {
+        res.end('this is the PRODUCT');
+    } else {
+        res.writeHead(404, {
+            'content-type': 'text/html',
+        });
+        res.end('Page not found :C');
+    }
+});
+
+server.listen(3000, '127.0.0.1', () => {
+    console.log('server is running at PORT=3000!');
+});
